@@ -1,4 +1,4 @@
-### React Jobs
+# React Jobs
 
 React practice creating a mock jobs board.
 

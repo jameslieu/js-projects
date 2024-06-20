@@ -7,7 +7,7 @@ const AddJobPage = ({ addJobSubmit }) => {
   const [type, setType] = useState('Full-Time');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [salary, setSalary] = useState('Under $50K');
+  const [salary, setSalary] = useState('Under £50K');
   const [companyName, setCompanyName] = useState('');
   const [companyDescription, setCompanyDescription] = useState('');
   const [contactEmail, setContactEmail] = useState('');
@@ -40,7 +40,7 @@ const AddJobPage = ({ addJobSubmit }) => {
   }
 
   return (
-    <section className="bg-indigo-50">
+    <section className="bg-emerald-50">
       <div className="container m-auto max-w-2xl py-24">
         <div
           className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0"
@@ -110,17 +110,17 @@ const AddJobPage = ({ addJobSubmit }) => {
                 value={salary}
                 onChange={e => setSalary(e.target.value)}
               >
-                <option value="Under $50K">Under $50K</option>
-                <option value="$50K - 60K">$50K - $60K</option>
-                <option value="$60K - 70K">$60K - $70K</option>
-                <option value="$70K - 80K">$70K - $80K</option>
-                <option value="$80K - 90K">$80K - $90K</option>
-                <option value="$90K - 100K">$90K - $100K</option>
-                <option value="$100K - 125K">$100K - $125K</option>
-                <option value="$125K - 150K">$125K - $150K</option>
-                <option value="$150K - 175K">$150K - $175K</option>
-                <option value="$175K - 200K">$175K - $200K</option>
-                <option value="Over $200K">Over $200K</option>
+                <option value="Under £50K">Under £50K</option>
+                <option value="£50K - 60K">£50K - £60K</option>
+                <option value="£60K - 70K">£60K - £70K</option>
+                <option value="£70K - 80K">£70K - £80K</option>
+                <option value="£80K - 90K">£80K - £90K</option>
+                <option value="£90K - 100K">£90K - £100K</option>
+                <option value="£100K - 125K">£100K - £125K</option>
+                <option value="£125K - 150K">£125K - £150K</option>
+                <option value="£150K - 175K">£150K - £175K</option>
+                <option value="£175K - 200K">£175K - £200K</option>
+                <option value="Over £200K">Over £200K</option>
               </select>
             </div>
 
@@ -210,7 +210,7 @@ const AddJobPage = ({ addJobSubmit }) => {
 
             <div>
               <button
-                className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
+                className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                 type="submit"
               >
                 Add Job

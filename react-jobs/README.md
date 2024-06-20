@@ -1,8 +1,41 @@
-# React + Vite
+### React Jobs
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React practice creating a mock jobs board.
 
-Currently, two official plugins are available:
+<img src="public/screen.png" />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Features
+- Home page
+- Navaigation
+- View list of jobs
+- View a job
+- Add a job
+- Edit a job
+- Delete a job
+
+## Usage
+
+This project uses JSON-Server for a mock backend.
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run JSON Server
+
+To serve up a mock API, we can use json-server. It will use the data from the `src/jobs.json` file
+The server will run on http://localhost:8000 
+
+```bash
+npm run server
+```
+
+### Run Vite Frontend
+
+React will run on http://localhost:3000
+
+```bash
+npm run dev
+```

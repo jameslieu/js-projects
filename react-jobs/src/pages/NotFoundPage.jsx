@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
-import { FaExclamationTriangle } from "react-icons/fa"
+import { Link } from "react-router-dom";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 const NotFoundPage = () => {
   return (
@@ -11,9 +11,11 @@ const NotFoundPage = () => {
       <Link
         to="/"
         className="text-white bg-indigo-700 hover:bg-indigo-900 rounded-md px-3 py-2 mt-4"
-      >Go Back</Link>
+      >
+        Go Back
+      </Link>
     </section>
-  )
-}
+  );
+};
 
-export default NotFoundPage
+export default NotFoundPage;

@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import Card from './Card'
+import { Link } from "react-router-dom";
+import Card from "./Card";
 
 const HomeCards = () => {
   return (
@@ -18,7 +18,7 @@ const HomeCards = () => {
               Browse Jobs
             </Link>
           </Card>
-          <Card bg='bg-emerald-100'>
+          <Card bg="bg-emerald-100">
             <h2 className="text-2xl font-bold">For Employers</h2>
             <p className="mt-2 mb-4">
               List your job to find the perfect developer for the role
@@ -33,7 +33,7 @@ const HomeCards = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default HomeCards
+export default HomeCards;

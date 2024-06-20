@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { FaMapMarker } from 'react-icons/fa'
+import { useState } from "react";
+import { FaMapMarker } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const JobListing = ({ job }) => {
@@ -8,7 +8,7 @@ const JobListing = ({ job }) => {
   let description = job.description;
 
   if (!showFullDescription) {
-    description = description.substring(0, 90) + '...';
+    description = description.substring(0, 90) + "...";
   }
 
   return (
@@ -19,14 +19,13 @@ const JobListing = ({ job }) => {
           <h3 className="text-xl font-bold">{job.title}</h3>
         </div>
 
-        <div className="mb-5">
-          {description}
-        </div>
+        <div className="mb-5">{description}</div>
 
         <button
           className="text-emerald-500 mb-5 hover:text-emerald-600"
-          onClick={() => setShowFullDescription((prevState) => !prevState)}>
-          {showFullDescription ? 'Less' : 'More '}
+          onClick={() => setShowFullDescription((prevState) => !prevState)}
+        >
+          {showFullDescription ? "Less" : "More "}
         </button>
 
         <h3 className="text-emerald-500 mb-2">{job.salary} / Year</h3>
@@ -47,7 +46,7 @@ const JobListing = ({ job }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default JobListing
+export default JobListing;

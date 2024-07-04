@@ -6,7 +6,7 @@
         <li 
           v-for="item in items"
           :key="item.id"
-          :class="item.selected ? 'is-selected' : ''"
+          :class="getClass(item)"
         >{{ item.name }}</li>
       </ul>
     </div>
@@ -26,6 +26,13 @@
       required: true
     }
   })
+
+  const getClass = (item: Item): { [key: string]: boolean } => {
+    return {
+      'is-current': item.current,
+      'is-excluded': item.exclude
+    };
+  }
 </script>
 
 <style scoped>
@@ -33,7 +40,7 @@
     background-color: lightblue;
     border: 1px solid #ccc;
     font-size: 24px;
-    height: 30vh;
+    min-height: 30vh;
   }
 
   .section-list {
@@ -41,7 +48,12 @@
     padding: 0;
   }
 
-  .is-selected {
+  .is-current {
     color: red;
+    font-weight: 600;
+  }
+
+  .is-excluded {
+    text-decoration: line-through;
   }
 </style>

@@ -17,6 +17,7 @@ import { Item } from './types/item'
 
 import { Ref, ref } from 'vue';
 
+let isRunning: Ref<boolean> = ref(false);
 let items: Ref<Item[]> = ref([
   { id: 1, name: "M", current: false, category: 'main', exclude: false },
   { id: 2, name: "A", current: false, category: 'main', exclude: false },
@@ -40,13 +41,29 @@ let items: Ref<Item[]> = ref([
   { id: 20, name: "FGH", current: false, category: 'zoo', exclude: false }
 ]);
 
-let isRunning: Ref<boolean> = ref(false);
-
 const resetItems = () => {
   items.value.forEach(item => {
     item.current = false;
     item.exclude = false;
   })
+}
+
+interface HashMap {
+  [index: string]: number;
+}
+
+const getCategoriesCountHashmap = () => {
+  const hashmap: HashMap = {};
+
+  items.value.forEach(item => {
+    if (!!hashmap[item.category]) {
+      hashmap[item.category] = hashmap[item.category] + 1;
+    } else {
+      hashmap[item.category] = 1;
+    }
+  });
+
+  return hashmap;
 }
 
 const onClick = async () => {
@@ -55,18 +72,19 @@ const onClick = async () => {
   }
 
   isRunning.value = !isRunning.value;
-  const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
-
-  let prevItem: Item | null = null; 
-
   
-  const swirlCounter = 5
+  const swirlCounter = 7
   let currentswirlCounter = swirlCounter;
   let excludeCount = 0;
-
-  for (let i = 0; i < items.value.length; i++) {
-    if (excludeCount > items.value.length - 2){
-      alert("DONE");
+  const categories = new Set(items.value.map(x => x.category));
+  const itemLength = items.value.length;
+  
+  let prevItem: Item | null = null; 
+  const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
+  const categoriesCountHashMap = getCategoriesCountHashmap();
+  for (let i = 0; i < itemLength; i++) {
+    if (excludeCount >= itemLength - categories.size){
+      alert("DONE: " + items.value.filter(x => !x.exclude).map(x => x.name));
       isRunning.value = false;
       break;
     }
@@ -74,39 +92,48 @@ const onClick = async () => {
     if (!isRunning.value) {
       break;
     }
-
+    
     const item = items.value[i];
+
+    if (categoriesCountHashMap[item.category] == 1)
+    {
+      continue;
+    }
+
     if (prevItem === null) {
       prevItem = item;
     }
 
     if (item.exclude) {
-      if (i == items.value.length - 1) {
+      if (i == itemLength - 1) {
         i = -1
       }
       continue;
     }
 
+    // track previous 
     prevItem.current = false;
     item.current = true;
     prevItem = item;
     
+    // apply exclusion to item
     if (currentswirlCounter === 0) {
       item.exclude = true;
       excludeCount++;
       currentswirlCounter = swirlCounter;
+      categoriesCountHashMap[item.category] = categoriesCountHashMap[item.category] - 1
     } else {
       currentswirlCounter--
     }
     
-    if (i == items.value.length - 1) {
+    // reset loop
+    if (i == itemLength - 1) {
       i = -1
     }
 
-    await delay(200);
+    await delay(100);
   }
 }
-
 </script>
 
 <style>

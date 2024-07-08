@@ -26,7 +26,7 @@
   <DisplayResults v-if="isComplete" :items="items.filter((x) => !x.exclude)" />
 
   <span class="select-title">Rotations:</span>
-  <select v-model="rotationCount">
+  <select v-model="rotationCount" :disabled="isRunning">
     <option>3</option>
     <option>4</option>
     <option>5</option>

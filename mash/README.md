@@ -1,5 +1,27 @@
-# Vue 3 + TypeScript + Vite
+# MASH game
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A web app of the children's game "MASH" built with Vue 3 + TypeScript - MVP.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+- Selection (elimination) algorithm
+- The sequencing steps of the selection are shown in a slow visual representation to add suspense/fun
+- The final results are presented to the player.
+
+### Future features
+- The player is prompted with the initial MASH questions
+- Ability to create own sections
+- ChatGPT support to write final fortune sentence based on result set.
+
+<img src="public/screen.png" width="400" />
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+

@@ -27,7 +27,8 @@ const runSelectionAlgorithmAsync = async (
 ) => {
   isRunning.value = !isRunning.value;
 
-  const swirlCounter: number = rotationCount.value;
+  // arrays are indexed at 0, so we'll subtract 1 from the rotation count
+  const swirlCounter: number = rotationCount.value - 1;
   let currentswirlCounter: number = swirlCounter;
   let excludeCount: number = 0;
   const itemLength: number = items.value.length;

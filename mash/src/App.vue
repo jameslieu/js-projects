@@ -46,163 +46,17 @@
 <script setup lang="ts">
 import Section from "./components/Section.vue";
 import Header from "./components/Header.vue";
-import { Item } from "./types/item";
+import { Item, ItemList } from "./types/item";
 import runSelectionAlgorithmAsync from "./SelectionAlgorithm";
 
 import { Ref, ref } from "vue";
 import DisplayResults from "./components/DisplayResults.vue";
 
-const generateUniqueId = () => {
-  return Math.floor(Math.random() * 1000000);
-};
-
 let isRunning: Ref<boolean> = ref(false);
 let isComplete: Ref<boolean> = ref(false);
 let rotationCount = ref(3);
 
-let items: Ref<Item[]> = ref([
-  {
-    id: generateUniqueId(),
-    name: "M",
-    current: false,
-    category: "main",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "A",
-    current: false,
-    category: "main",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "S",
-    current: false,
-    category: "main",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "H",
-    current: false,
-    category: "main",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Superhero",
-    current: false,
-    category: "job",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Software Developer",
-    current: false,
-    category: "job",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Skydiving instructor",
-    current: false,
-    category: "job",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Toilet Licker",
-    current: false,
-    category: "job",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Tesla",
-    current: false,
-    category: "car",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Range Rover",
-    current: false,
-    category: "car",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Toyota",
-    current: false,
-    category: "car",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Pinto",
-    current: false,
-    category: "car",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Black Widow",
-    current: false,
-    category: "marriage",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Wonder Woman",
-    current: false,
-    category: "marriage",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Scarlett Witch",
-    current: false,
-    category: "marriage",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Wicked Witch of the West",
-    current: false,
-    category: "marriage",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Azgard",
-    current: false,
-    category: "place",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Nottingham",
-    current: false,
-    category: "place",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Bali",
-    current: false,
-    category: "place",
-    exclude: false,
-  },
-  {
-    id: generateUniqueId(),
-    name: "Poop Town",
-    current: false,
-    category: "place",
-    exclude: false,
-  },
-]);
-
+const items: Ref<Item[]> = ref(ItemList);
 const resetItems = () => {
   items.value.forEach((item) => {
     item.current = false;

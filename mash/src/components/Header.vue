@@ -37,5 +37,6 @@
 
   .is-excluded {
     text-decoration: line-through;
+    color: grey;
   }
 </style>

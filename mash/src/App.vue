@@ -1,13 +1,28 @@
 <template>
-  <Header title="MASH" :items="items.filter(x => x.category === 'main')"/>
+  <Header title="MASH" :items="items.filter(x => x.category === 'main')" />
   
   <div class="items">
-    <Section class="card" title="Foo" :items="items.filter(x => x.category === 'foo')" />
-    <Section class="card" title="Bar" :items="items.filter(x => x.category === 'bar')" />
-    <Section class="card" title="Baz" :items="items.filter(x => x.category === 'baz')" />
-    <Section class="card" title="Zoo" :items="items.filter(x => x.category === 'zoo')" />
+    <Section class="card" title="job" :items="items.filter(x => x.category === 'job')" />
+    <Section class="card" title="car" :items="items.filter(x => x.category === 'car')" />
+    <Section class="card" title="marriage" :items="items.filter(x => x.category === 'marriage')" />
+    <Section class="card" title="place" :items="items.filter(x => x.category === 'place')" />
   </div>
-  <button class="btn" @click=onClick()>{{ isRunning ? 'Stop' : 'Start' }}</button>
+  <DisplayResults v-if="isComplete" :items="items.filter(x => !x.exclude)" />
+
+  <span class="select-title">Rotations:</span>
+  <select v-model="rotationCount">
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+    <option>6</option>
+    <option>7</option>
+    <option>8</option>
+    <option>9</option>
+    <option>10</option>
+  </select>
+
+  <button class="btn btn-main" @click=onClick()>{{ isRunning ? 'Stop' : 'Start' }}</button>
+  <button class="btn btn-default" @click=onResetClick()>Reset</button>
 </template>
 
 <script setup lang="ts">
@@ -17,29 +32,37 @@ import { Item } from './types/item'
 import runSelectionAlgorithmAsync from './SelectionAlgorithm';
 
 import { Ref, ref } from 'vue';
+import DisplayResults from './components/DisplayResults.vue';
+
+const generateUniqueId = () => {
+  return Math.floor(Math.random() * 1000000);
+};
 
 let isRunning: Ref<boolean> = ref(false);
+let isComplete: Ref<boolean> = ref(false);
+let rotationCount = ref(3)
+
 let items: Ref<Item[]> = ref([
-  { id: 1, name: "M", current: false, category: 'main', exclude: false },
-  { id: 2, name: "A", current: false, category: 'main', exclude: false },
-  { id: 3, name: "S", current: false, category: 'main', exclude: false },
-  { id: 4, name: "H", current: false, category: 'main', exclude: false },
-  { id: 5, name: "abc", current: false, category: 'foo', exclude: false },
-  { id: 6, name: "efg", current: false, category: 'foo', exclude: false },
-  { id: 7, name: "hij", current: false, category: 'foo', exclude: false },
-  { id: 8, name: "klm", current: false, category: 'foo', exclude: false },
-  { id: 9, name: "nop", current: false, category: 'bar', exclude: false },
-  { id: 10, name: "qrs", current: false, category: 'bar', exclude: false },
-  { id: 11, name: "tuv", current: false, category: 'bar', exclude: false },
-  { id: 12, name: "wxy", current: false, category: 'bar', exclude: false },
-  { id: 13, name: "wxy", current: false, category: 'baz', exclude: false },
-  { id: 14, name: "z12", current: false, category: 'baz', exclude: false },
-  { id: 15, name: "123", current: false, category: 'baz', exclude: false },
-  { id: 16, name: "456", current: false, category: 'baz', exclude: false },
-  { id: 17, name: "789", current: false, category: 'zoo', exclude: false },
-  { id: 18, name: "0AB", current: false, category: 'zoo', exclude: false },
-  { id: 19, name: "CDE", current: false, category: 'zoo', exclude: false },
-  { id: 20, name: "FGH", current: false, category: 'zoo', exclude: false }
+  { id: generateUniqueId(), name: "M", current: false, category: 'main', exclude: false },
+  { id: generateUniqueId(), name: "A", current: false, category: 'main', exclude: false },
+  { id: generateUniqueId(), name: "S", current: false, category: 'main', exclude: false },
+  { id: generateUniqueId(), name: "H", current: false, category: 'main', exclude: false },
+  { id: generateUniqueId(), name: "Superhero", current: false, category: 'job', exclude: false },
+  { id: generateUniqueId(), name: "Software Developer", current: false, category: 'job', exclude: false },
+  { id: generateUniqueId(), name: "Skydiving instructor", current: false, category: 'job', exclude: false },
+  { id: generateUniqueId(), name: "Toilet Licker", current: false, category: 'job', exclude: false },
+  { id: generateUniqueId(), name: "Tesla", current: false, category: 'car', exclude: false },
+  { id: generateUniqueId(), name: "Range Rover", current: false, category: 'car', exclude: false },
+  { id: generateUniqueId(), name: "Toyota", current: false, category: 'car', exclude: false },
+  { id: generateUniqueId(), name: "Pinto", current: false, category: 'car', exclude: false },
+  { id: generateUniqueId(), name: "Black Widow", current: false, category: 'marriage', exclude: false },
+  { id: generateUniqueId(), name: "Wonder Woman", current: false, category: 'marriage', exclude: false },
+  { id: generateUniqueId(), name: "Scarlett Witch", current: false, category: 'marriage', exclude: false },
+  { id: generateUniqueId(), name: "Wicked Witch of the West", current: false, category: 'marriage', exclude: false },
+  { id: generateUniqueId(), name: "Azgard", current: false, category: 'place', exclude: false },
+  { id: generateUniqueId(), name: "Nottingham", current: false, category: 'place', exclude: false },
+  { id: generateUniqueId(), name: "Bali", current: false, category: 'place', exclude: false },
+  { id: generateUniqueId(), name: "Poop Town", current: false, category: 'place', exclude: false }
 ]);
 
 const resetItems = () => {
@@ -49,12 +72,19 @@ const resetItems = () => {
   })
 }
 
+const onResetClick = () => {
+  resetItems();
+  isRunning.value = false;
+  isComplete.value = false;
+}
+
 const onClick = async () => {
   if (!isRunning.value) {
     resetItems();
+    isComplete.value = false;
   }
 
-  runSelectionAlgorithmAsync(items, isRunning);
+  runSelectionAlgorithmAsync(items, rotationCount, isRunning, isComplete);
 }
 </script>
 
@@ -64,11 +94,30 @@ const onClick = async () => {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 10px;
+    margin-bottom: 10px;
   }
 
   .btn {
     margin: 10px;
-    background-color: blueviolet;
     color: white;
+  }
+
+  .btn-main {
+    background-color: blueviolet
+  }
+
+  .btn-default {
+    background-color: grey
+  }
+
+  .select-title {
+    font-weight: 600;
+    font-size: 24px;
+  }
+
+  select {
+    padding: 0.7em 1em;
+    font-size: 16px;
+    margin: 10px;
   }
 </style>

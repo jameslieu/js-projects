@@ -19,22 +19,36 @@ const getCategoriesCountHashmap = (items: Ref<Item[]>) => {
   return hashmap;
 }
 
-const runSelectionAlgorithmAsync = async (items: Ref<Item[]>, isRunning: Ref<boolean>) => {
+const runSelectionAlgorithmAsync = async (
+  items: Ref<Item[]>,
+  rotationCount: Ref<number>,
+  isRunning: Ref<boolean>,
+  isComplete: Ref<boolean>) => {
   isRunning.value = !isRunning.value;
   
-  const swirlCounter = 7
-  let currentswirlCounter = swirlCounter;
-  let excludeCount = 0;
-  const categories = new Set(items.value.map(x => x.category));
-  const itemLength = items.value.length;
+  const swirlCounter: number = rotationCount.value;
+  let currentswirlCounter: number = swirlCounter;
+  let excludeCount: number = 0;
+  const itemLength: number = items.value.length;
   
+  const categories = new Set(items.value.map(x => x.category));
   let prevItem: Item | null = null; 
   const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
-  const categoriesCountHashMap = getCategoriesCountHashmap(items);
+  const delayInMs: number = 150;
+  const categoriesCountHashMap: HashMap = getCategoriesCountHashmap(items);
+
+  const getIndexValue = (index: number) => {
+    if (index == itemLength - 1) {
+      index = -1
+    }
+
+    return index;
+  }
+
   for (let i = 0; i < itemLength; i++) {
     if (excludeCount >= itemLength - categories.size){
-      alert("DONE: " + items.value.filter(x => !x.exclude).map(x => x.name));
       isRunning.value = false;
+      isComplete.value = true;
       break;
     }
 
@@ -43,9 +57,9 @@ const runSelectionAlgorithmAsync = async (items: Ref<Item[]>, isRunning: Ref<boo
     }
     
     const item = items.value[i];
-
     if (categoriesCountHashMap[item.category] == 1)
     {
+      i = getIndexValue(i)
       continue;
     }
 
@@ -53,10 +67,9 @@ const runSelectionAlgorithmAsync = async (items: Ref<Item[]>, isRunning: Ref<boo
       prevItem = item;
     }
 
+    // skip excluded
     if (item.exclude) {
-      if (i == itemLength - 1) {
-        i = -1
-      }
+      i = getIndexValue(i)
       continue;
     }
 
@@ -75,12 +88,8 @@ const runSelectionAlgorithmAsync = async (items: Ref<Item[]>, isRunning: Ref<boo
       currentswirlCounter--
     }
     
-    // reset loop
-    if (i == itemLength - 1) {
-      i = -1
-    }
-
-    await delay(100);
+    i = getIndexValue(i)
+    await delay(delayInMs);
   }
 }
 

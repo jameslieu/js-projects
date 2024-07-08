@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <h3>{{ title }}</h3>
+    <h3>{{ title.toUpperCase() }}</h3>
     <div>
       <ul class="section-list">
         <li 
@@ -40,7 +40,8 @@
     background-color: lightblue;
     border: 1px solid #ccc;
     font-size: 24px;
-    min-height: 30vh;
+    font-weight: 600;
+    min-height: 20vh;
   }
 
   .section-list {
@@ -50,10 +51,11 @@
 
   .is-current {
     color: red;
-    font-weight: 600;
   }
 
   .is-excluded {
     text-decoration: line-through;
+    color: grey;
+    font-weight: 400;
   }
 </style>
